@@ -2,10 +2,15 @@
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import {useState} from 'react'
+import AddTask from './components/AddTask'
+//Here App is React Component. Component takes in parameters
+//called props
 const App=()=> {
   /*We want to use these in other components
   that is why these were declared in App.js
   which is a global component*/
+  const [showAddTask, setShowAddTask]=useState(false)
+
   const [tasks, setTasks]=useState(
     [{
         id:1,
@@ -27,6 +32,13 @@ const App=()=> {
     }]
 )
 
+//Add Task
+const addTask=(task)=>{
+  const id=Math.floor(Math.random()*1000)+1
+  const newTask={id, ...task}
+  setTasks([... tasks, newTask])
+}
+
 //Toggle Reminder
 const toggleReminder = (id) => {
   setTasks(
@@ -45,7 +57,9 @@ const deleteTask=(id)=>{
 
   return (
     <div className='container'>
-      <Header></Header>
+      <Header onAdd={()=>setShowAddTask(!showAddTask)}></Header>
+      {showAddTask && <AddTask onAdd={addTask}>
+      </AddTask>}
       {tasks.length>0 ? <Tasks tasks={tasks} 
       onDelete={deleteTask} onToggle={toggleReminder}>
       </Tasks> : 'No Tasks to show'}
