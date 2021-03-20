@@ -57,7 +57,10 @@ const deleteTask=(id)=>{
 
   return (
     <div className='container'>
-      <Header onAdd={()=>setShowAddTask(!showAddTask)}></Header>
+      <Header onAdd={()=>setShowAddTask
+      (!showAddTask)}
+      showAdd={showAddTask}
+      ></Header>
       {showAddTask && <AddTask onAdd={addTask}>
       </AddTask>}
       {tasks.length>0 ? <Tasks tasks={tasks} 
